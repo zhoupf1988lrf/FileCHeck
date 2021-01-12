@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Qhbx.Common.FileExtensionCheck</PackageId>
+    <Company>青海宝讯溯源网络科技有限公司</Company>
+    <Product>资源文件的真实格式的检测</Product>
+    <Authors>pfZhou by Qhbx</Authors>
+    <Description>资源文件的真实格式的检测(暂支持PNG图片、JPG图片、文本文档等格式)</Description>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+</Project>
