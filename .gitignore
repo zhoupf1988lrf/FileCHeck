@@ -7,3 +7,4 @@
 /FileCheck/FileCheck/obj
 /FileCheck/FileCheckDebug/obj/Release
 /FileCheck/FileCheckDebug/obj/Debug
+/FileCheck/FileCheck/bin/Debug/netstandard2.0
