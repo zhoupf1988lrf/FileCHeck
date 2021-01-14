@@ -36,8 +36,10 @@ namespace FileCheck.Enums
         HLP = 6395,
         DOC = 208207,
         XLS = 208207,
-        DOCX = 208207,
-        XLSX = 208207,
+        PPT = 208207,
+        DOCX = 8075,
+        XLSX = 8075,
+        PPTX = 8075,
         VALIDFILE = 9999999
     }
 }

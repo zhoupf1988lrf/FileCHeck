@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using FileCheck.Enums;
 using FileCheck.Responsibility;
+using FileCheck.Core;
 
 namespace FileCheck.Factories
 {
@@ -13,6 +14,7 @@ namespace FileCheck.Factories
         /// 获取AbsCheck.
         /// 
         /// 文件的二进制流的前两个字节判断文件的真实格式
+        /// 不同的文件类型都有文件头签名
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -26,12 +28,13 @@ namespace FileCheck.Factories
             {
                 throw new Exception($"{nameof(context.FileAbsoluteUrl)}和{nameof(context.FileStream)}不能同时为null");
             }
+
             FileStream fileStream = null;
             if (context.FileStream == null || context.FileStream.Length == 0)
             {
                 try
                 {
-                    fileStream = new FileStream(context.FileAbsoluteUrl, FileMode.Open, FileAccess.Read);
+                    fileStream = new FileStream(context.FileAbsoluteUrl, FileMode.Open,FileAccess.Read);
                     context.FileStream = fileStream;
                 }
                 catch (Exception ex)
@@ -43,8 +46,10 @@ namespace FileCheck.Factories
             {
                 throw new ArgumentNullException(nameof(context.FileStream));
             }
+            byte[] streamBytes = context.FileStream.ToFileBytes();
+            context.FileStream.Position = 0;
 
-            string fileType = string.Empty;
+            string fileType = "";
             using (BinaryReader reader = new BinaryReader(context.FileStream))
             {
                 for (int i = 0; i < 2; i++)
@@ -52,7 +57,8 @@ namespace FileCheck.Factories
                     fileType += reader.ReadByte().ToString();
                 }
             }
-            fileStream.Dispose();
+            fileStream?.Dispose();
+            context.FileStream = streamBytes.ToStream();
 
             FileStreamHeaderExt headerExt = FileStreamHeaderExt.VALIDFILE;
             if (Enum.TryParse(fileType, out FileStreamHeaderExt result))
@@ -69,12 +75,26 @@ namespace FileCheck.Factories
             AbsCheck txtCheck = new TxtCheck();
             AbsCheck xlsCheck = new XlsCheck();
             AbsCheck xlsxCheck = new XlsxCheck();
+            AbsCheck docCheck = new DocCheck();
+            AbsCheck docxCheck = new DocxCheck();
+            AbsCheck pptCheck = new PptCheck();
+            AbsCheck pptxCheck = new PptxCheck();
+            AbsCheck pdfCheck = new PdfCheck();
+            AbsCheck zipCheck = new ZipCheck();
+            AbsCheck aspxCheck = new AspxCheck();
             jpgCheck.SetNext(pngCheck);
             pngCheck.SetNext(bmpCheck);
             bmpCheck.SetNext(gifCheck);
             gifCheck.SetNext(txtCheck);
             txtCheck.SetNext(xlsCheck);
             xlsCheck.SetNext(xlsxCheck);
+            xlsxCheck.SetNext(docCheck);
+            docCheck.SetNext(docxCheck);
+            docxCheck.SetNext(pptCheck);
+            pptCheck.SetNext(pptxCheck);
+            pptxCheck.SetNext(pdfCheck);
+            pdfCheck.SetNext(zipCheck);
+            zipCheck.SetNext(aspxCheck);
             return jpgCheck;
         }
     }

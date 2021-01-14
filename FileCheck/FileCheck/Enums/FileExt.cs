@@ -36,7 +36,9 @@ namespace FileCheck.Enums
         HLP,
         DOC,
         XLS,
+        PPT,
         DOCX,
-        XLSX
+        XLSX,
+        PPTX
     }
 }
