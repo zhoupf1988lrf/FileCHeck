@@ -6,8 +6,21 @@
     <Company>青海宝讯溯源网络科技有限公司</Company>
     <Product>资源文件的真实格式的检测</Product>
     <Authors>pfZhou by Qhbx</Authors>
-    <Description>资源文件的真实格式的检测(暂支持PNG图片、JPG图片、文本文档等格式)</Description>
-    <Version>1.0.1</Version>
+    <Description>资源文件的真实格式的检测
+(支持PNG图片、JPG图片、BMP图片、GIF图片、文本文档、Microsoft Excel 97-2003工作表、Microsoft Excel工作表等格式、Microsoft Word 97-2003文档、Microsoft Word 文档、Microsoft PowerPoint 97-2003演示文稿、Microsoft PowerPoint演示文档、Microsof Edge PDF Document格式的检测)</Description>
+    <Version>1.1.0</Version>
+    <PackageTags>jpg、png、bmp、txt、doc、docx、xls、xlsx、ppt、pptx、pdf</PackageTags>
+    <PackageReleaseNotes>此产品仅青海宝讯溯源网络公司使用。</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/zhoupf1988lrf/FileCHeck.git</PackageProjectUrl>
+    <PackageIcon>logo2.png</PackageIcon>
+    <Copyright>青海宝讯溯源网络公司版权所有</Copyright>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Platform\AgriBigDataPlatform.BX.Web\Content\Home\images\logo2.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
