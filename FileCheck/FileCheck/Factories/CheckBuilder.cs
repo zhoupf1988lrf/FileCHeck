@@ -4,7 +4,6 @@ using System.Text;
 using System.IO;
 using FileCheck.Enums;
 using FileCheck.Responsibility;
-using FileCheck.Core;
 
 namespace FileCheck.Factories
 {
@@ -24,41 +23,40 @@ namespace FileCheck.Factories
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            if (string.IsNullOrWhiteSpace(context.FileAbsoluteUrl) && context.FileStream == null)
+            if (string.IsNullOrWhiteSpace(context.FileAbsoluteUrl) && context.FileBytes == null)
             {
-                throw new Exception($"{nameof(context.FileAbsoluteUrl)}和{nameof(context.FileStream)}不能同时为null");
+                throw new Exception($"{nameof(context.FileAbsoluteUrl)}和{nameof(context.FileBytes)}不能同时为null");
             }
 
-            FileStream fileStream = null;
-            if (context.FileStream == null || context.FileStream.Length == 0)
+            if (context.FileBytes == null || context.FileBytes.Length == 0)
             {
                 try
                 {
-                    fileStream = new FileStream(context.FileAbsoluteUrl, FileMode.Open,FileAccess.Read);
-                    context.FileStream = fileStream;
+                    using (FileStream fileStream = new FileStream(context.FileAbsoluteUrl, FileMode.Open, FileAccess.Read))
+                    {
+                        context.FileBytes = new byte[(int)fileStream.Length];
+                        fileStream.Read(context.FileBytes, 0, context.FileBytes.Length);
+                    }
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("获取文件流失败", ex);
                 }
             }
-            if (context.FileStream == null || context.FileStream.Length == 0)
+            if (context.FileBytes == null || context.FileBytes.Length == 0)
             {
-                throw new ArgumentNullException(nameof(context.FileStream));
+                throw new ArgumentNullException(nameof(context.FileBytes));
             }
-            byte[] streamBytes = context.FileStream.ToFileBytes();
-            context.FileStream.Position = 0;
 
             string fileType = "";
-            using (BinaryReader reader = new BinaryReader(context.FileStream))
+            using (MemoryStream memoryStream = new MemoryStream(context.FileBytes))
+            using (BinaryReader reader = new BinaryReader(memoryStream))
             {
                 for (int i = 0; i < 2; i++)
                 {
                     fileType += reader.ReadByte().ToString();
                 }
             }
-            fileStream?.Dispose();
-            context.FileStream = streamBytes.ToStream();
 
             FileStreamHeaderExt headerExt = FileStreamHeaderExt.VALIDFILE;
             if (Enum.TryParse(fileType, out FileStreamHeaderExt result))

@@ -16,9 +16,9 @@ namespace FileCheck
         /// </summary>
         public string FileAbsoluteUrl { get; set; }
         /// <summary>
-        /// 文件流(优先使用文件流)
+        /// 文件的字节序列(优先使用字节序列)
         /// </summary>
-        public Stream FileStream { get; set; }
+        public byte[] FileBytes { get; set; }
         /// <summary>
         /// 验证的文件扩展名
         /// </summary>

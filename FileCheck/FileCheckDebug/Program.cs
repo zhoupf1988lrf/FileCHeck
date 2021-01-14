@@ -15,9 +15,9 @@ namespace FileCheckDebug
         {
             FileCheckContext fileCheckContext = new FileCheckContext
             {
-                FileAbsoluteUrl = "C:\\Users\\Shinelon\\Desktop\\txtFile.jpg",
-                FileStream = null,
-                ValidateFileExts = new FileExt[] { FileExt.JPG },
+                FileAbsoluteUrl = "C:\\Users\\Shinelon\\Desktop\\2.png",
+                FileBytes = null,
+                ValidateFileExts = new FileExt[] { FileExt.PNG },
                 IsValid = false
             };
             var fileCheck = CheckBuilder.Builder(fileCheckContext);
