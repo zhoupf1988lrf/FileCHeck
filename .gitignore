@@ -10,3 +10,5 @@
 /FileCheck/FileCheck/bin/Debug/netstandard2.0
 /FileCheck/FileCheckDebug/bin/Debug
 /FileCheck/FileCheck/bin/Release/netstandard2.0
+/FileCheck/FileCheck/bin/Debug
+/FileCheck/packages/Qhbx.Common.FileExtensionCheck.1.1.0
